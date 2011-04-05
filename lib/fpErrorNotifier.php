@@ -22,12 +22,6 @@ class fpErrorNotifier
 
   /**
    *
-   * @var sfContext
-   */
-  protected $context;
-
-  /**
-   *
    * @var fpBaseErrorNotifierDriver
    */
   protected $driver;
@@ -168,15 +162,16 @@ class fpErrorNotifier
   }
 
   /**
+   *
    * @return sfContext|fpErrorNotifierNullObject
    */
   public function context()
   {
-    if(!$this->context)
-    {
-      $this->context = sfContext::getInstance();
+    if (!class_exists('sfContext') || !sfContext::hasInstance()) {
+      return new fpErrorNotifierNullObject();
     }
-    return $this->context;
+
+    return sfContext::getInstance();
   }
 
   /**
